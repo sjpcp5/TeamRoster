@@ -1,8 +1,19 @@
-# TeamRoster
+# Team Roster
+ This app is a NODE Command Line that takes information about a software team and generates an HTML webpage. The webpage will display summaries for each person. The app's design pattern is based on tests written before in order to write maintainable code.  
 
-##
+## Requirements 
+ 
+ * NPM Dependencies jest and inquirer 
+ * Technologies: Node.js, JavaScript, HTML, CSS
+ * Classes written in Javascript
+ * HTML templates for main, engineer, intern, and manager
+ * All tests must pass
 
-##
+
+## Application Demo
+
+![Employee Summary 1](./Assets/10-OOP-homework-demo-1.png)
+![Employee Summary 2](./Assets/10-OOP-homework-demo-2.png)
 
 
 
