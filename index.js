@@ -13,38 +13,56 @@ const Manager = require("./lib/Manager");
 
 let data = {};
 // write quesitons for employee
-function checkEngineer() {
-    if (role = "engineer") {
-        return true;
+// function checkRole() {
+//     if (role === "engineer") {
+//         return true;
+//     } else if (role === "intern") {
+//         return true;
+//     } else {
+//         return true
+//     };
+// };
+
+// function checkIntern(role) {
+//     if (role === "intern") {
+//         return true;
+//     } else {
+//         return false;
+//     }
+// };
+
+// function checkManager(role) {
+//     if (role === "manager") {
+//         return true;
+//     } else {
+//         return false;
+//     }
+// };
+
+function validateNum(input) {
+
+    if (typeof input !== 'number') {
+        console.log('You need to provide a number');
+        return;
     } else {
-        return false;
+        return true
     };
-};
-
-function checkIntern() {
-    if (role = "intern") {
-        return true;
-    } else {
-        return false;
-    }
-};
-
-function checkManager() {
-    if (role = "manager") {
-        return true;
-    } else {
-        return false;
-    }
 };
 const questions = [{
         type: "input",
-        message: "What is your github name?",
+        message: "What is your name?",
         name: "name",
+        validate: function validateName(name) {
+            return name !== "";
+        }
     },
     {
         type: "number",
         message: "Input your employee ID.",
         name: "id",
+        validate: function validateName(input) {
+            return input !== "number";
+        }
 
     },
     {
@@ -62,19 +80,25 @@ const questions = [{
         type: "input",
         message: "What is your github username?",
         name: "github",
-        when: checkEngineer(role)
+        when: function(answers) {
+            return answers === "engineer"
+        }
     },
     {
         type: "input",
         message: "What is the name of your school?",
         name: "school",
-        when: checkIntern(role)
+        when: function(answers) {
+            return answers === "intern";
+        }
     },
     {
         type: "input",
         message: "What is your office number?",
         name: "officeNumber",
-        when: checkManager(role)
+        when: function(answers) {
+            return answers === "manager";
+        }
     }
 ];
 
