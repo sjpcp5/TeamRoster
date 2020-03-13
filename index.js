@@ -1,14 +1,14 @@
 // 4 classes employ, manager, engineer, intern
 // create a lib folder
 const inquirer = require("inquirer");
-const generateHTML = require("./generateHTML");
+const generateHTML = require("./lib/generateHTML");
 const fs = require("fs");
 const util = require("util");
 const writeFileAsync = util.promisify(fs.writeFile);
-const Employee = require("./Employee");
-const Intern = require("./Intern");
-const Engineer = require("./Engineer");
-const Manager = require("./Manager");
+const Employee = require("./lib/Employee");
+const Intern = require("./lib/Intern");
+const Engineer = require("./lib/Engineer");
+const Manager = require("./lib/Manager");
 
 
 let data = {};
