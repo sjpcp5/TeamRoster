@@ -13,31 +13,31 @@ const Manager = require("./lib/Manager");
 
 let data = {};
 // write quesitons for employee
-// function checkRole() {
-//     if (role === "engineer") {
-//         return true;
-//     } else if (role === "intern") {
-//         return true;
-//     } else {
-//         return true
-//     };
-// };
+function checkRole() {
+    if (role === "engineer") {
+        return true;
+    } else if (role === "intern") {
+        return true;
+    } else {
+        return true
+    };
+};
 
-// function checkIntern(role) {
-//     if (role === "intern") {
-//         return true;
-//     } else {
-//         return false;
-//     }
-// };
+function checkIntern(role) {
+    if (role === "intern") {
+        return true;
+    } else {
+        return false;
+    }
+};
 
-// function checkManager(role) {
-//     if (role === "manager") {
-//         return true;
-//     } else {
-//         return false;
-//     }
-// };
+function checkManager(role) {
+    if (role === "manager") {
+        return true;
+    } else {
+        return false;
+    }
+};
 
 function validateNum(input) {
 
@@ -81,7 +81,7 @@ const questions = [{
         message: "What is your github username?",
         name: "github",
         when: function(answers) {
-            return answers === "engineer"
+            return answers == "engineer"
         }
     },
     {
@@ -89,7 +89,7 @@ const questions = [{
         message: "What is the name of your school?",
         name: "school",
         when: function(answers) {
-            return answers === "intern";
+            return answers == "intern";
         }
     },
     {
@@ -97,7 +97,7 @@ const questions = [{
         message: "What is your office number?",
         name: "officeNumber",
         when: function(answers) {
-            return answers === "manager";
+            return answers == "manager";
         }
     }
 ];
@@ -108,11 +108,11 @@ const questions = [{
 // wirte quesitions for manager 
 // generate id with prompt
 // store answers in objects 
-// let employee = {}
-// let intern = {}
-// let manager = {}
-// let engineer = {}
-// write promise for prompt if answered different role answer these questions
+let employeeRoll = {}
+let internRoll = {}
+let managerRoll = {}
+let engineerRoll = {}
+    // write promise for prompt if answered different role answer these questions
 
 function writeToFile(info) {
     console.log("write to file")
@@ -126,8 +126,12 @@ function init() {
     inquirer
         .prompt(questions)
 
-    .then(function(answers) {
-            console.log(`questions successful`, answers);
+    .then(function(input) {
+            const employeeNew = new Employee(input.name, input.id, input.email);
+            const engineerNew = new Engineer(input.name, input.id, input.email, input.github);
+            const managerNew = new Manager(input.name, input.id, input.email, input.officeNumber);
+            const internNew = new Intern(input.name, input.id, input.email, input.school);
+            console.log(`questions successful`, answers, "New employee", employeeNew, 'New Eningeers', engineerNew, "New managers", managerNew, "New interns", internNew);
 
         })
         .catch(function(error) {
