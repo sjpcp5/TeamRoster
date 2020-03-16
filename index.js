@@ -57,23 +57,38 @@ function writeToFile(info) {
     convertToHtml(html);
 
 };
+const collectInputs = async(inputs = []) => {
+    const { again, ...answers } = await
+    inquirer.prompt(questions);
+    const newEmps = [...inputs, answers];
+    return again ? collectInputs(newEmps) : newEmps;
+};
+const main = async() => {
+    const inputs = await collectInputs();
+    console.log(inputs);
 
-function init() {
-    inquirer
-        .prompt(questions)
+};
+main();
 
-    .then(function(input) {
-            const employeeNew = new Employee(input.name, input.id, input.email);
-            const engineerNew = new Engineer(input.name, input.id, input.email, input.github);
-            const managerNew = new Manager(input.name, input.id, input.email, input.officeNumber);
-            const internNew = new Intern(input.name, input.id, input.email, input.school);
-            console.log(`questions successful`, answers, "New employee", employeeNew, 'New Eningeers', engineerNew, "New managers", managerNew, "New interns", internNew);
+// function init() {
+//     inquirer
+//         .prompt(questions)
 
-        })
-        .catch(function(error) {
-            console.log("invailid entry", error);
-            return
-        });
-}
-//starts process 
-init();
+//     .then(function(input) {
+//             const employeeNew = new Employee(input.name, input.id, input.email);
+//             const engineerNew = new Engineer(input.name, input.id, input.email, input.github);
+//             const managerNew = new Manager(input.name, input.id, input.email, input.officeNumber);
+//             const internNew = new Intern(input.name, input.id, input.email, input.school);
+//             console.log(`questions successful`, answers, "New employee", employeeNew, 'New Eningeers', engineerNew, "New managers", managerNew, "New interns", internNew);
+
+//         })
+//         .catch(function(error) {
+//             console.log("invailid entry", error);
+//             return
+//         });
+// }
+
+// // additional role questions
+
+// //starts process 
+// init();
