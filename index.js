@@ -44,11 +44,8 @@ const questions = require("./lib/questions");
 // wirte quesitions for manager 
 // generate id with prompt
 // store answers in objects 
-let employee = {}
-let intern = {}
-let manager = {}
-let engineer = {}
-    // write promise for prompt if answered different role answer these questions
+let teamHTML = "";
+// write promise for prompt if answered different role answer these questions
 
 function writeToFile(info) {
     console.log("write to file")
@@ -66,9 +63,23 @@ const collectInputs = async(inputs = []) => {
 const main = async() => {
     const inputs = await collectInputs();
     console.log(inputs);
+    for (i = 0; i < inputs; i++) {
+        switch (inputs.role) {
+            case "Manager":
+                await collectInputs()
+                    .then((inputs) => {
+                        const manager = new Manager(inputs.name, inputs.id, inputs.email, inputs.officeNumber);
+
+                    })
+        }
+
+    }
+
 
 };
 main();
+
+function writetoHTML
 
 // function init() {
 //     inquirer
