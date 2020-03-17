@@ -44,13 +44,13 @@ const questions = require("./lib/questions");
 // wirte quesitions for manager 
 // generate id with prompt
 // store answers in objects 
-var teamHTML = "";
+var teamHTML = [];
 // write promise for prompt if answered different role answer these questions
 
 function writeToFile(info) {
     console.log("write to file")
     const html = generateHTML(info);
-    writeFileAsync("../main.html", html);
+    writeFileAsync("./output/team.html", html);
     convertToHtml(html);
 
 };
@@ -64,20 +64,22 @@ const main = async() => {
     const inputs = await collectInputs();
     console.log(inputs);
     for (i = 0; i < inputs.length; i++) {
-        console.log("loop is running away...")
-        switch (inputs[i].role) {
+        console.log("loop is running...")
+        var input = inputs[i];
+        console.log(input, "array before switch")
+        switch (input.role) {
 
             // writes manager into instance of Manager then into html template
             case "manager":
 
-                (inputs) => {
-                    const manager = new Manager(name, id, email, inputs.officeNumber);
-
-                    teamMember = fs.readFileSync("./templates/manager.html", manager);
-                    //uses eval( to pass template literals from html files.)
-                    // adds string to the teamHTML.
-                    teamHTML = teamHTML + "\n" + eval('`' + teamMember + '`');
-                };
+                const manager = new Manager(input.name, input.id, input.email, input.officeNumber);
+                console.log(manager);
+                let teamManager = fs.readFileSync("./templates/manager.html", manager);
+                console.log(teamMember);
+                //uses eval( to pass template literals from html files.)
+                // adds string to the teamHTML.
+                teamHTML = push("\n" + eval('`' + teamManager + '`'));
+                console.log(teamHTML);
                 console.log("manager case ran");
 
                 break;
@@ -85,9 +87,9 @@ const main = async() => {
             case "intern":
                 (inputs) => {
                     const intern = new Intern(name, id, email, inputs.school);
-                    teamMember = fs.readFileSync("./templates/intern.html", intern);
+                    let teamIntern = fs.readFileSync("./templates/intern.html", intern);
 
-                    teamHTML = teamHTML + "\n" + eval('`' + teamMember + '`');
+                    teamHTML = push(+"\n" + eval('`' + teamIntern + '`'));
 
                 };
                 console.log("intern case ran");
@@ -95,8 +97,8 @@ const main = async() => {
             case "engineer":
                 (inputs) => {
                     const engineer = new Engineer(name, id, email, inputs.github);
-                    teamMember = fs.readFileSync("./templates/engineer.html", engineer);
-                    teamHTML = teamHTML + "\n" + eval('`' + teamMember + '`');
+                    let teamEngineer = fs.readFileSync("./templates/engineer.html", engineer);
+                    teamHTML = push("\n" + eval('`' + teamEngineer + '`'));
                 };
                 console.log("engineer case ran");
                 break;
@@ -106,17 +108,19 @@ const main = async() => {
         } //end of switch
 
     } // end of for loop
-    const mainHTML = fs.readFileSync("templates/main.html", teamHTML);
 
-    teamHTML = eval('`' + mainHTML + '`');
+    writeToFile(teamHTML);
+    // const mainHTML = fs.readFileSync("./templates/main.html", teamHTML, "UTF-8");
+    // console.log(teamHTML, "1st teamHTML");
+    // teamHTML = eval('`' + mainHTML + '`');
+    // console.log(teamHTML, " 2ndHTML");
+    // fs.writeFile("./output/team.html", teamHTML, function(err) {
+    //     if (err) {
+    //         return console.log(err);
 
-    fs.writeFile("./output/team.html", teamHTML, function(err) {
-        if (err) {
-            return console.log(err);
-
-        }
-        console.log("Team HTML written");
-    });
+    //     }
+    //     console.log("Team HTML written");
+    // });
 
 };
 main();
