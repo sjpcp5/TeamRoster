@@ -106,7 +106,7 @@ const main = async() => {
         } //end of switch
 
     } // end of for loop
-    const mainHTML = fs.readFileSync("templates/main.html");
+    const mainHTML = fs.readFileSync("templates/main.html", teamHTML);
 
     teamHTML = eval('`' + mainHTML + '`');
 
