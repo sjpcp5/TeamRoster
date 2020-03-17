@@ -65,21 +65,55 @@ const main = async() => {
     console.log(inputs);
     for (i = 0; i < inputs; i++) {
         switch (inputs.role) {
+            // writes manager into instance of Manager then into html template
             case "Manager":
                 await collectInputs()
                     .then((inputs) => {
-                        const manager = new Manager(inputs.name, inputs.id, inputs.email, inputs.officeNumber);
+                        const manager = new Manager(name, id, email, inputs.officeNumber);
 
-                    })
+                        teamMember = fs.readFileSync("./templates/manager.html");
+                        //uses eval( to pass template literals from html files.)
+                        // adds string to the teamHTML.
+                        teamHTML = teamHTML + "\n" + eval('`' + teamMember + '`');
+                    });
+                break;
+
+            case "Intern":
+                await collectInputs()
+                    .then((inputs) => {
+                        const intern = new Intern(name, id, email, inputs.school);
+                        teamMember = fs.readFileSync("./templates/intern.html");
+
+                        teamHTML = teamHTML + "\n" + eval('`' + teamMember + '`');
+
+                    });
+                break;
+            case "Engineer":
+                await collectInputs()
+                    .then((inputs) => {
+                        const engineer = new Engineer(name, id, email, inputs.github);
+                        teamMember = fs.readFileSync("./templates/engineer.html");
+                        teamHTML = teamHTML + "\n" + eval('`' + teamMember + '`');
+                    });
+                break;
+        } //end of switch
+
+    } // end of for loop
+    const mainHTML = fs.readFileSync("templates/main.html");
+
+    teamHTML = eval('`' + mainHTML + '`');
+
+    fs.writeFile("./output/team.html", teamHTML, function(err) {
+        if (err) {
+            return console.log(err);
+
         }
-
-    }
-
+        console.log("Team HTML written");
+    });
 
 };
 main();
 
-function writetoHTML
 
 // function init() {
 //     inquirer
