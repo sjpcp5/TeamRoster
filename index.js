@@ -44,7 +44,7 @@ const questions = require("./lib/questions");
 // wirte quesitions for manager 
 // generate id with prompt
 // store answers in objects 
-let teamHTML = "";
+var teamHTML = "";
 // write promise for prompt if answered different role answer these questions
 
 function writeToFile(info) {
@@ -63,38 +63,45 @@ const collectInputs = async(inputs = []) => {
 const main = async() => {
     const inputs = await collectInputs();
     console.log(inputs);
-    for (i = 0; i < inputs; i++) {
-        switch (inputs.role) {
+    for (i = 0; i < inputs.length; i++) {
+        console.log("loop is running away...")
+        switch (inputs[i].role) {
+
             // writes manager into instance of Manager then into html template
-            case "Manager":
-                await collectInputs()
-                    .then((inputs) => {
-                        const manager = new Manager(name, id, email, inputs.officeNumber);
+            case "manager":
 
-                        teamMember = fs.readFileSync("./templates/manager.html");
-                        //uses eval( to pass template literals from html files.)
-                        // adds string to the teamHTML.
-                        teamHTML = teamHTML + "\n" + eval('`' + teamMember + '`');
-                    });
+                (inputs) => {
+                    const manager = new Manager(name, id, email, inputs.officeNumber);
+
+                    teamMember = fs.readFileSync("./templates/manager.html", manager);
+                    //uses eval( to pass template literals from html files.)
+                    // adds string to the teamHTML.
+                    teamHTML = teamHTML + "\n" + eval('`' + teamMember + '`');
+                };
+                console.log("manager case ran");
+
                 break;
 
-            case "Intern":
-                await collectInputs()
-                    .then((inputs) => {
-                        const intern = new Intern(name, id, email, inputs.school);
-                        teamMember = fs.readFileSync("./templates/intern.html");
+            case "intern":
+                (inputs) => {
+                    const intern = new Intern(name, id, email, inputs.school);
+                    teamMember = fs.readFileSync("./templates/intern.html", intern);
 
-                        teamHTML = teamHTML + "\n" + eval('`' + teamMember + '`');
+                    teamHTML = teamHTML + "\n" + eval('`' + teamMember + '`');
 
-                    });
+                };
+                console.log("intern case ran");
                 break;
-            case "Engineer":
-                await collectInputs()
-                    .then((inputs) => {
-                        const engineer = new Engineer(name, id, email, inputs.github);
-                        teamMember = fs.readFileSync("./templates/engineer.html");
-                        teamHTML = teamHTML + "\n" + eval('`' + teamMember + '`');
-                    });
+            case "engineer":
+                (inputs) => {
+                    const engineer = new Engineer(name, id, email, inputs.github);
+                    teamMember = fs.readFileSync("./templates/engineer.html", engineer);
+                    teamHTML = teamHTML + "\n" + eval('`' + teamMember + '`');
+                };
+                console.log("engineer case ran");
+                break;
+            default:
+                console.log(inputs[i].role);
                 break;
         } //end of switch
 
