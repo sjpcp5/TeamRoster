@@ -10,49 +10,36 @@ const Intern = require("./lib/Intern");
 const Engineer = require("./lib/Engineer");
 const Manager = require("./lib/Manager");
 const questions = require("./lib/questions");
+const generateManager = require('./lib/generateManager');
+const generateIntern = require('./lib/generateIntern');
+const generateEngineer = require('./lib/generateEngineer');
 
 
 // write quesitons for employee
-// function checkRole() {
-//     if (role === "engineer") {
-//         return true;
-//     } else if (role === "intern") {
-//         return true;
-//     } else {
-//         return true
-//     };
-// };
-
-// function checkIntern(role) {
-//     if (role === "intern") {
-//         return true;
-//     } else {
-//         return false;
-//     }
-// };
-
-// function checkManager(role) {
-//     if (role === "manager") {
-//         return true;
-//     } else {
-//         return false;
-//     }
-// };
-
 // write questions for intern
-
 // wirte quesitions for manager 
+
 // generate id with prompt
-// store answers in objects 
-var teamHTML = [];
+
+// store generated employees and associated HTML in teamHTML to write to team.html 
+var teamHTML = [{}];
+
+
 // write promise for prompt if answered different role answer these questions
+//JSON.PARSE()
 
-function writeToFile(info) {
-    console.log("write to file")
-    const html = generateHTML(info);
-    writeFileAsync("./output/team.html", html);
-    convertToHtml(html);
+function writeToFile(teamHTML) {
+    console.log("write to file function works", teamHTML)
+    const html = generateHTML(teamHTML);
+    console.log(html, "html read")
+    writeFileAsync("./output/team.html", html, function(err) {
+        if (err) {
+            return console.log("didn't write team.html")
 
+        } else {
+            return console.log("Team HTML written")
+        }
+    });
 };
 const collectInputs = async(inputs = []) => {
     const { again, ...answers } = await
@@ -73,46 +60,50 @@ const main = async() => {
             case "manager":
 
                 const manager = new Manager(input.name, input.id, input.email, input.officeNumber);
-                console.log(manager);
-                let teamManager = fs.readFileSync("./templates/manager.html", manager);
-                console.log(teamMember);
+
+                let teamManager = generateManager(manager);
+                console.log("teamManager read");
                 //uses eval( to pass template literals from html files.)
                 // adds string to the teamHTML.
-                teamHTML = push("\n" + eval('`' + teamManager + '`'));
+                console.log(manager);
+                teamHTML = teamManager;
                 console.log(teamHTML);
                 console.log("manager case ran");
 
                 break;
 
             case "intern":
-                (inputs) => {
-                    const intern = new Intern(name, id, email, inputs.school);
-                    let teamIntern = fs.readFileSync("./templates/intern.html", intern);
 
-                    teamHTML = push(+"\n" + eval('`' + teamIntern + '`'));
+                const intern = new Intern(input.name, input.id, input.email, input.school);
+                let teamIntern = generateIntern(intern);
 
-                };
+                teamHTML = teamIntern;
+
+
                 console.log("intern case ran");
                 break;
             case "engineer":
-                (inputs) => {
-                    const engineer = new Engineer(name, id, email, inputs.github);
-                    let teamEngineer = fs.readFileSync("./templates/engineer.html", engineer);
-                    teamHTML = push("\n" + eval('`' + teamEngineer + '`'));
-                };
+
+                const engineer = new Engineer(input.name, input.id, input.email, input.github);
+                let teamEngineer = generateEngineer(engineer);
+                teamHTML = teamEngineer;
+                console.log(teamEngineer, "team Engineer added")
                 console.log("engineer case ran");
                 break;
             default:
-                console.log(inputs[i].role);
+                console.log(input.role, "...default");
                 break;
         } //end of switch
 
-    } // end of for loop
+    }; // end of for loop
+    // const mainHTML = fs.readFileSync("./templates/main.html", teamHTML, function(err){
 
-    writeToFile(teamHTML);
-    // const mainHTML = fs.readFileSync("./templates/main.html", teamHTML, "UTF-8");
+    // })
+
+    // ;
     // console.log(teamHTML, "1st teamHTML");
     // teamHTML = eval('`' + mainHTML + '`');
+    writeToFile(teamHTML);
     // console.log(teamHTML, " 2ndHTML");
     // fs.writeFile("./output/team.html", teamHTML, function(err) {
     //     if (err) {
@@ -124,6 +115,9 @@ const main = async() => {
 
 };
 main();
+
+
+
 
 
 // function init() {
