@@ -24,20 +24,18 @@ const generateEngineer = require('./lib/generateEngineer');
 var teamHTML = [];
 var dataTeam = ' ';
 
-// write promise for prompt if answered different role answer these questions
-//JSON.PARSE()
 
-
+// pushes generated employees to teamHTML array
 function pushTeamHTML(info) {
     teamHTML.push(info);
 };
-
+// stringifys teamHTML and removes commas
 function objectToJoin(teamHTML) {
 
     console.log(teamHTML, "teamHTML", dataTeam);
     return dataTeam = teamHTML.join('');
 };
-
+// writes to html
 function writeToFile(dataTeam) {
     console.log("A", dataTeam)
     const html = generateHTML(dataTeam);
@@ -101,7 +99,6 @@ const main = async() => {
 
 
     }; // end of for loop
-    // const mainHTML = fs.readFileSync("./templates/main.html", teamHTML, function(err){
     objectToJoin(teamHTML, function(err) {
         if (err) {
             console.log(error, "L");
@@ -115,47 +112,6 @@ const main = async() => {
         }
     });
 
-    // })
-
-    // ;
-    // console.log(teamHTML, "1st teamHTML");
-    // teamHTML = eval('`' + mainHTML + '`');
-
-    // console.log(teamHTML, " 2ndHTML");
-    // fs.writeFile("./output/team.html", teamHTML, function(err) {
-    //     if (err) {
-    //         return console.log(err);
-
-    //     }
-    //     console.log("Team HTML written");
-    // });
 };
 
 main();
-
-
-
-
-
-// function init() {
-//     inquirer
-//         .prompt(questions)
-
-//     .then(function(input) {
-//             const employeeNew = new Employee(input.name, input.id, input.email);
-//             const engineerNew = new Engineer(input.name, input.id, input.email, input.github);
-//             const managerNew = new Manager(input.name, input.id, input.email, input.officeNumber);
-//             const internNew = new Intern(input.name, input.id, input.email, input.school);
-//             console.log(`questions successful`, answers, "New employee", employeeNew, 'New Eningeers', engineerNew, "New managers", managerNew, "New interns", internNew);
-
-//         })
-//         .catch(function(error) {
-//             console.log("invailid entry", error);
-//             return
-//         });
-// }
-
-// // additional role questions
-
-// //starts process 
-// init();
