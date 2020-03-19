@@ -12,7 +12,8 @@
 
 ## Application Demo
 
-![video demo](https://youtu.be/QEHoLxdUpDc)
+![youtube video demo <https://youtu.be/QEHoLxdUpDc>]
+
 ![teams html](./Assets/teamHTML.png)
 
 
