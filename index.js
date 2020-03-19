@@ -4,7 +4,6 @@ const inquirer = require("inquirer");
 const generateHTML = require("./lib/generateHTML");
 const fs = require("fs");
 const util = require("util");
-const readFileSync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 const Intern = require("./lib/Intern");
 const Engineer = require("./lib/Engineer");
@@ -22,38 +21,29 @@ const generateEngineer = require('./lib/generateEngineer');
 // generate id with prompt
 
 // store generated employees and associated HTML in teamHTML to write to team.html 
-var teamHTML = [{}];
-
+var teamHTML = [];
+var dataTeam = ' ';
 
 // write promise for prompt if answered different role answer these questions
 //JSON.PARSE()
+
+
 function pushTeamHTML(info) {
     teamHTML.push(info);
-
 };
 
-function objectToParse() {
-    dataTeam = JSON.stringify(teamHTML)
-        .then(() => {
-            writeToFile(dataTeam);
-        })
-        .catch((err) => {
-            console.log(err, "K")
-        })
+function objectToJoin(teamHTML) {
+
+    console.log(teamHTML, "teamHTML", dataTeam);
+    return dataTeam = teamHTML.join('');
 };
 
 function writeToFile(dataTeam) {
     console.log("A", dataTeam)
     const html = generateHTML(dataTeam);
     console.log(html, "B")
-    writeFileAsync("./output/team.html", html, function(err) {
-        if (err) {
-            return console.log("C")
-
-        } else {
-            return console.log("D")
-        }
-    });
+    writeFileAsync("./output/team.html", html)
+    return
 };
 // aysnc function runs through quesitions till user says no 
 const collectInputs = async(inputs = []) => {
@@ -83,7 +73,6 @@ const main = async() => {
                 // adds string to the teamHTML.
                 pushTeamHTML(teamManager);
                 console.log(teamHTML, "G");
-                console.log("H");
                 break;
 
             case "intern":
@@ -109,9 +98,23 @@ const main = async() => {
                 break;
         } //end of switch
 
+
+
     }; // end of for loop
     // const mainHTML = fs.readFileSync("./templates/main.html", teamHTML, function(err){
-    objectToParse(teamHTML);
+    objectToJoin(teamHTML, function(err) {
+        if (err) {
+            console.log(error, "L");
+            return
+        }
+    });
+    writeToFile(dataTeam, function(err) {
+        if (err) {
+            console.log(error, "N");
+            return
+        }
+    });
+
     // })
 
     // ;
@@ -126,8 +129,8 @@ const main = async() => {
     //     }
     //     console.log("Team HTML written");
     // });
-
 };
+
 main();
 
 

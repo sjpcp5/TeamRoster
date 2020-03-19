@@ -12,8 +12,8 @@
 
 ## Application Demo
 
-![Employee Summary 1](./Assets/10-OOP-homework-demo-1.png)
-![Employee Summary 2](./Assets/10-OOP-homework-demo-2.png)
+![video demo](https://youtu.be/QEHoLxdUpDc)
+![teams html](./Assets/teamHTML.png)
 
 
 
